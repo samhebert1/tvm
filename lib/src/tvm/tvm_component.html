@@ -1,0 +1,160 @@
+<material-radio-group>
+    <h3>Calculation Mode:</h3>
+    <material-radio *ngFor="let item of modeOptions" [checked]="item == option"
+        (checkedChange)="option = $event ? item : option">
+        {{ item }}
+    </material-radio>
+</material-radio-group>
+
+<div class="pv">
+
+    <div class="input">
+        <h4>Calculate Present Value</h4>
+        <p>Please enter the required variables:</p>
+
+        <form class="fields">
+
+            <material-input type="number" keypressUpdate label="Years" required
+                requiredErrorMsg="this value is required!" autoFocus floatingLabel style="width:20%"
+                [(ngModel)]="pVModel.t" ngControl="t" id="t">
+            </material-input>
+
+            <material-input type="percent" keypressUpdate label="Interest Rate" required
+                requiredErrorMsg="this value is required!" autoFocus floatingLabel style="width:40%"
+                [(ngModel)]="pVModel.r" ngControl="r" trailingText="%" id="r">
+            </material-input>
+
+            <material-input type="number" keypressUpdate label="Future Value" required
+                requiredErrorMsg="this value is required!" autoFocus floatingLabel style="width:60%"
+                [(ngModel)]="pVModel.fV" ngControl="fV" leadingText="$" trailingText=".00" id="fV">
+            </material-input>
+
+            <material-button raised class="submit-button" (click)="getPV()">
+                Submit
+            </material-button>
+        </form>
+    </div>
+
+    <div class="metrics">
+
+        <acx-scorecard label="Number of Periods:" value="{{ pVModel.t }} years" description="investment period">
+        </acx-scorecard>
+
+        <acx-scorecard label="Interest Rate:" value="{{ pVModel.r }}%" description="APR">
+        </acx-scorecard>
+
+        <acx-scorecard label="Future Value" value="{{ pVModel.fV | currency:'USD':true:'1.2-2' }}"
+            description="+{{(pVModel.fV - pVModel.pV) | currency:'USD':true:'1.2-2'  }}" [changeGlyph]="true"
+            changeType="POSITIVE">
+        </acx-scorecard>
+
+        <acx-scorecard *ngIf="pVModel.pV != 0" label="Present Value:"
+            value="{{ pVModel.pV | currency:'USD':true:'1.2-2'}}" description="calculated answer"
+            [selectedColor]="green500" [selected]="true" [extraBig]="true">
+        </acx-scorecard>
+    </div>
+</div>
+
+
+<div class="fv">
+
+    <div class="input">
+        <h4>Calculate Future Value</h4>
+        <p>This section solves using compound interest. Please enter the required variables:</p>
+
+        <form class="fields">
+
+            <material-input type="number" keypressUpdate label="Years" required
+                requiredErrorMsg="this value is required!" autoFocus floatingLabel style="width:20%"
+                [(ngModel)]="pVModel.t" ngControl="t" id="t">
+            </material-input>
+
+            <material-input type="percent" keypressUpdate label="Interest Rate" required
+                requiredErrorMsg="this value is required!" autoFocus floatingLabel style="width:40%"
+                [(ngModel)]="pVModel.r" ngControl="r" trailingText="%" id="r">
+            </material-input>
+
+            <material-input type="number" keypressUpdate label="Present Value" required
+                requiredErrorMsg="this value is required!" autoFocus floatingLabel style="width:60%"
+                [(ngModel)]="pVModel.pV" ngControl="pV" leadingText="$" trailingText=".00" id="pV">
+            </material-input>
+
+            <material-button raised class="submit-button" (click)="getFV()">
+                Submit
+            </material-button>
+        </form>
+    </div>
+
+    <div class="metrics">
+
+        <acx-scorecard label="Number of Periods:" value="{{ pVModel.t }} years" description="investment period">
+        </acx-scorecard>
+
+        <acx-scorecard label="Interest Rate:" value="{{ pVModel.r }}%" description="APR">
+        </acx-scorecard>
+
+        <acx-scorecard label="Present Value" value="{{ pVModel.pV | currency:'USD':true:'1.2-2' }}"
+            description="original investment">
+        </acx-scorecard>
+
+        <acx-scorecard *ngIf="pVModel.fV != 0" label="Future Value:"
+            value="{{ pVModel.fV | currency:'USD':true:'1.2-2'}}"
+            description="+{{(pVModel.fV - pVModel.pV) | currency:'USD':true:'1.2-2'  }}" [changeGlyph]="true"
+            changeType="POSITIVE" [extraBig]="true">
+        </acx-scorecard>
+    </div>
+</div>
+
+
+<div class="num-periods">
+
+    <div class="input">
+        <h4>Find Number of Periods</h4>
+        <p>Please enter the required variables:</p>
+        <form class="fields">
+
+            <material-input type="percent" keypressUpdate label="Interest Rate" required
+                requiredErrorMsg="this value is required!" autoFocus floatingLabel style="width:40%"
+                [(ngModel)]="pVModel.r" ngControl="r" trailingText="%" id="r">
+            </material-input>
+
+            <material-input type="number" keypressUpdate label="Future Value" required
+                requiredErrorMsg="this value is required!" autoFocus floatingLabel style="width:60%"
+                [(ngModel)]="pVModel.fV" ngControl="fV" leadingText="$" trailingText=".00" id="fV">
+            </material-input>
+
+            <material-input type="number" keypressUpdate label="Present Value" required
+                requiredErrorMsg="this value is required!" autoFocus floatingLabel style="width:60%"
+                [(ngModel)]="pVModel.pV" ngControl="pV" leadingText="$" trailingText=".00" id="pV">
+            </material-input>
+
+            <material-button raised class="submit-button" (click)="getT()">
+                Submit
+            </material-button>
+        </form>
+    </div>
+
+    <div class="metrics">
+
+        <acx-scorecard label="Interest Rate:" value="{{ pVModel.r }}%" description="APR">
+        </acx-scorecard>
+
+        <acx-scorecard label="Present Value" value="{{ pVModel.pV | currency:'USD':true:'1.2-2' }}"
+            description="original investment">
+        </acx-scorecard>
+
+        <acx-scorecard label="Future Value" value="{{ pVModel.fV | currency:'USD':true:'1.2-2' }}"
+            description="+{{(pVModel.fV - pVModel.pV) | currency:'USD':true:'1.2-2'  }}" [changeGlyph]="true"
+            changeType="POSITIVE">
+        </acx-scorecard>
+
+        <acx-scorecard *ngIf="pVModel.t != 0" label="Number of Periods:" value="{{ pVModel.t }} years" description="investment period" [selectedColor]="green500" [selected]="true" [extraBig]="true">
+            </acx-scorecard>
+
+    </div>
+</div>
+
+<div class="interest">
+    <h4>Solve for Interest Rate</h4>
+    <p>Please enter the required variables:</p>
+</div>

@@ -1,0 +1,59 @@
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+li {
+    line-height: 3em;
+}
+
+li:hover {
+    background-color: #EEEEEE;
+}
+
+li material-checkbox {
+    vertical-align: middle;
+}
+
+li material-fab {
+    float: right;
+    vertical-align: middle;
+}
+
+.done {
+    text-decoration: line-through;
+}
+
+.pv, .fv, .num-periods {
+    margin: 5px;
+    padding: 15px;
+    background-color: seashell;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.pv h4 {
+    margin: 0px;
+}
+
+.fields {
+    padding: 1px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.submit-button {
+    background-color: white;
+}
+
+.input {
+    width: 50%;
+}
+
+.scores {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
